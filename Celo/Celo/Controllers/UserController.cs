@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Celo.Model;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Celo.Repository;
 
 namespace Celo.Controllers
 {
@@ -11,11 +15,20 @@ namespace Celo.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private UserRepository userRepository;
+
+        public UserController()
+        {
+            userRepository = new UserRepository();
+        }
+
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
         {
-            return new string[] { "value1", "value2" };
+            var allUsers = userRepository.Users.FindAll();
+
+            return JsonSerializer.Serialize(allUsers.Take(maxRecords));
         }
 
         // GET: api/User/5
