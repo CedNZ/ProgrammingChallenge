@@ -46,5 +46,15 @@ namespace Celo.Repository
         {
             return Users.FindById(id);
         }
+
+        public bool DeleteUser(int id)
+        {
+            return Users.Delete(id);
+        }
+
+        public bool UpdateUser(int id, User user)
+        {
+            return Users.Update(id, user);
+        }
     }
 }

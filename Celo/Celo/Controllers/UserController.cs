@@ -24,33 +24,45 @@ namespace Celo.Controllers
 
         // GET: api/User
         [HttpGet]
-        public string Get([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
+        public ActionResult Get([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
         {
             var allUsers = _userRepository.GetUsers();
 
             allUsers = allUsers.Where(u => u.Name.Contains(nameSearch));
 
-            return JsonSerializer.Serialize(allUsers.Take(maxRecords));
+            return Ok(JsonSerializer.Serialize(allUsers.Take(maxRecords)));
         }
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public ActionResult Get(int id)
         {
-            return _userRepository.GetUserById(id).ToString();
+            var user = _userRepository.GetUserById(id);
+            if (user != null)
+            {
+                return Ok(user.ToString());
+            }
+            return StatusCode(500, $"Unable to find User with Id {id}");
         }
 
         // POST: api/User
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("Update/{id}")]
+        public ActionResult Update(int id, [FromBody] string userJson)
         {
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            return _userRepository.UpdateUser(id, user) 
+                ? Ok($"Succesfully updated User with Id {user.Id}")
+                : StatusCode(500, $"Unable to update user with Id {user.Id}");
+
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE: api/User/Delete/5
+        [HttpPost("Delete/{id}", Name = "Delete")]
+        public ActionResult Delete(int id)
         {
-
+            return _userRepository.DeleteUser(id)
+                ? Ok($"User with Id {id} successfully deleted")
+                : StatusCode(500, $"Unable to delete user with Id {id}");
         }
     }
 }
