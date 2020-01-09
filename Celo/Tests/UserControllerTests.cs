@@ -185,7 +185,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Update(alice.Id, alice.ToString());
+            var result = userController.Update(alice.Id, alice);
 
             result.Should().NotBeNull();
 
@@ -204,7 +204,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Update(alice.Id, alice.ToString());
+            var result = userController.Update(alice.Id, alice);
 
             result.Should().NotBeNull();
 
