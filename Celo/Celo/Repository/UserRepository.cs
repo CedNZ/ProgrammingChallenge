@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace Celo.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private LiteDatabase database;
 
@@ -35,6 +35,16 @@ namespace Celo.Repository
             }
         }
 
-        public LiteCollection<User> Users => database.GetCollection<User>("Users");
+        private LiteCollection<User> Users => database.GetCollection<User>("Users");
+
+        public IEnumerable<User> GetUsers()
+        {
+            return Users.FindAll();
+        }
+
+        public User GetUserById(int id)
+        {
+            return Users.FindById(id);
+        }
     }
 }

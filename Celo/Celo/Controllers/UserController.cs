@@ -15,18 +15,20 @@ namespace Celo.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private UserRepository userRepository;
+        private IUserRepository _userRepository;
 
-        public UserController()
+        public UserController(IUserRepository userRepository)
         {
-            userRepository = new UserRepository();
+            _userRepository = userRepository;
         }
 
         // GET: api/User
         [HttpGet]
         public string Get([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
         {
-            var allUsers = userRepository.Users.FindAll();
+            var allUsers = _userRepository.GetUsers();
+
+            allUsers = allUsers.Where(u => u.Name.Contains(nameSearch));
 
             return JsonSerializer.Serialize(allUsers.Take(maxRecords));
         }
@@ -35,7 +37,7 @@ namespace Celo.Controllers
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
-            return "value";
+            return _userRepository.GetUserById(id).ToString();
         }
 
         // POST: api/User
@@ -44,16 +46,11 @@ namespace Celo.Controllers
         {
         }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }
