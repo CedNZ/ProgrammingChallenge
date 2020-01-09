@@ -28,7 +28,7 @@ namespace Celo.Controllers
         {
             var allUsers = _userRepository.GetUsers();
 
-            allUsers = allUsers.Where(u => u.Name.Contains(nameSearch));
+            allUsers = allUsers.Where(u => u.Name.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
 
             return Ok(JsonSerializer.Serialize(allUsers.Take(maxRecords)));
         }
