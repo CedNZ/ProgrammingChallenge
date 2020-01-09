@@ -13,7 +13,7 @@ namespace Celo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private IUserRepository _userRepository;
 
@@ -45,11 +45,21 @@ namespace Celo.Controllers
             return StatusCode(500, $"Unable to find User with Id {id}");
         }
 
-        // POST: api/User
-        [HttpPost("Update/{id}")]
-        public ActionResult Update(int id, [FromBody] string userJson)
+        // POST: api/User/Update/5
+        [HttpGet("Update/{id}", Name = "Update")]
+        public ActionResult Update(int id)
         {
-            var user = JsonSerializer.Deserialize<User>(userJson);
+            var user = _userRepository.GetUserById(id);
+            //var user = JsonSerializer.Deserialize<User>(userJson);
+            return View(user);
+
+        }
+
+        // POST: api/User/Update/5
+        [HttpPost("Update/{id}", Name = "Update")]
+        public ActionResult Update(int id, [FromForm] User user)
+        {
+            //var user = JsonSerializer.Deserialize<User>(userJson);
             return _userRepository.UpdateUser(id, user) 
                 ? Ok($"Succesfully updated User with Id {user.Id}")
                 : StatusCode(500, $"Unable to update user with Id {user.Id}");
