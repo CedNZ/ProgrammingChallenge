@@ -21,13 +21,18 @@ namespace Celo.Controllers
 
         // GET: api/User
         [HttpGet]
-        public ActionResult Get([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
+        public ActionResult Index([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
         {
+            nameSearch ??= "";
+
             var allUsers = _userRepository.GetUsers();
 
             allUsers = allUsers.Where(u => u.Name.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
 
-            return Ok(JsonSerializer.Serialize(allUsers.Take(maxRecords)));
+            ViewBag.MaxRecords = maxRecords;
+            ViewBag.NameSearch = nameSearch;
+
+            return View(allUsers.Take(maxRecords));
         }
 
         // GET: api/User/5

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Celo.Model.User>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div id="search">
+        <form method="get">
+            <input type="number" name="maxRecords" value="@ViewBag.MaxRecords"/>
+            <input type="text" name="nameSearch" value="@ViewBag.NameSearch"/>
+            <input type="submit" class="btn btn-primary" />
+        </form>
+    </div>
+    <div id="data">
+        <table>
+            <thead>
+                <tr>
+                    @{ var tempObj = new Celo.Model.User();}
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Birthday)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Gender)
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach(var user in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => user.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Birthday)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Gender)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

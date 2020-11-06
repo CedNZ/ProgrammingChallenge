@@ -50,7 +50,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Get();
+            var result = userController.Index();
 
             result.Should().NotBeNull();
 
@@ -70,7 +70,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Get(maxRecords: 1);
+            var result = userController.Index(maxRecords: 1);
 
             result.Should().NotBeNull();
 
@@ -90,7 +90,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Get(nameSearch: "bob");
+            var result = userController.Index(nameSearch: "bob");
 
             result.Should().NotBeNull();
 
@@ -110,7 +110,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Get(nameSearch: "one");
+            var result = userController.Index(nameSearch: "one");
 
             result.Should().NotBeNull();
 
@@ -130,7 +130,7 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Get(nameSearch: "dr");
+            var result = userController.Index(nameSearch: "dr");
 
             result.Should().NotBeNull();
 
