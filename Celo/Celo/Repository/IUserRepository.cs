@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LiteDB;
+﻿using System.Collections.Generic;
 using Celo.Model;
 
 namespace Celo.Repository

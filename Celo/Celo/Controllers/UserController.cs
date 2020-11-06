@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Celo.Model;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+
 using Celo.Repository;
 
 namespace Celo.Controllers
@@ -50,7 +47,6 @@ namespace Celo.Controllers
         public ActionResult Update(int id)
         {
             var user = _userRepository.GetUserById(id);
-            //var user = JsonSerializer.Deserialize<User>(userJson);
             return View(user);
 
         }
@@ -59,7 +55,6 @@ namespace Celo.Controllers
         [HttpPost("Update/{id}", Name = "Update")]
         public ActionResult Update(int id, [FromForm] User user)
         {
-            //var user = JsonSerializer.Deserialize<User>(userJson);
             return _userRepository.UpdateUser(id, user) 
                 ? Ok($"Succesfully updated User with Id {user.Id}")
                 : StatusCode(500, $"Unable to update user with Id {user.Id}");
