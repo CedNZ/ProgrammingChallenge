@@ -3,6 +3,10 @@
 To run this, open in Visual Studio 2019 and hit run.
 The default page is a users list, with the top 20 items.
 
+Basic search fields at top of Users Index to fetch more records, search via Name, and recieve the response as Json
+Clicking the user thumbnail will navigate to the User page
+
+
 api/User?maxRecords=50&nameSearch=Bob
 The users list can be filtered with the url parameter 'maxRecords' to select more or less than 20.
 Or can be searched using 'nameSearch' parameter, which will search across a users First Name, Last Name and Title.
