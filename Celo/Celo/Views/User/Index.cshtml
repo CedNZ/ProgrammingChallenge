@@ -15,7 +15,23 @@
         ToggleCheckbox = () => {
             asJson = !asJson;
             document.getElementById('asJson').value = asJson.toString();
-        }
+        };
+    </script>
+    <script type="text/javascript">
+            DeleteRow = (userId, sender) => {
+                let deleteConfirm = confirm('Are you sure you want to delete this user? Action cannot be undone');
+                let rowIndex = sender.parentNode.parentNode.rowIndex;
+                if (deleteConfirm) {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('post', "./User/Delete/" + userId);
+                    xhr.send();
+                    xhr.onload = () => {
+                        if (xhr.status == 200) {
+                            document.getElementById('userTable').deleteRow(rowIndex);
+                        }
+                    }
+                }
+            }
     </script>
 </head>
 <body>
@@ -41,7 +57,7 @@
     </div>
     <br />
     <div id="data">
-        <table>
+        <table id="userTable">
             <thead>
                 <tr>
                     @{ var tempObj = new Celo.Model.User();}
@@ -78,7 +94,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a href='@Url.Action("Get", new {id = user.Id })'>
+                                    <a href='@Url.Action("Get", new { id = user.Id })'>
                                         <img src="@user.ThumbnailPath" />
                                     </a>
                                 </div>
@@ -105,13 +121,16 @@
                                 @Html.DisplayFor(model => user.Gender)
                             </td>
                             <td>
-                                @Html.ActionLink("Update Details", "Update", new { id = user.Id })
+                                <button>
+                                    @Html.ActionLink("Update Details", "Update", new { id = user.Id })
+                                </button>
+                                <button onclick="DeleteRow(@user.Id, this)">Delete User</button>
                             </td>
                         </tr>
-                        }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </body>
-    </html>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
