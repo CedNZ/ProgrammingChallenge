@@ -207,7 +207,7 @@ namespace Tests
         }
 
         [Fact]
-        public void UpdateUser_Returns200()
+        public void UpdateUser_Succeeds()
         {
             var userRepositoryMock = new Mock<IUserRepository>();
 
@@ -219,8 +219,7 @@ namespace Tests
 
             result.Should().NotBeNull();
 
-            result.Should().BeOfType<OkObjectResult>()
-                .Which.StatusCode.Should().Be(200);
+            result.Should().BeOfType<RedirectToActionResult>();
 
             userRepositoryMock.Verify(x => x.UpdateUser(It.Is<int>(i => i == 1), It.Is<User>(u => u.Name == alice.Name)));
         }
