@@ -42,7 +42,7 @@ namespace Tests
         };
 
         [Fact]
-        public void GetUsers_NoArgs_ReturnsAllUsers()
+        public void GetUsers_AsJson_ReturnsAllUsers()
         {
             var userRepositoryMock = new Mock<IUserRepository>();
 
@@ -50,11 +50,13 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Index();
+            var result = userController.Index(asJson: true);
 
             result.Should().NotBeNull();
 
-            IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(((dynamic)result).Value);
+            result.Should().BeOfType(typeof(JsonResult));
+
+            IEnumerable<User> users = ((JsonResult)result).Value as IEnumerable<User>;
 
             users.Should().HaveCount(3);
             users.Last().Name.Should().Be(charles.Name);
@@ -70,11 +72,13 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Index(maxRecords: 1);
+            var result = userController.Index(maxRecords: 1, asJson: true);
 
             result.Should().NotBeNull();
 
-            IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(((dynamic)result).Value);
+            result.Should().BeOfType(typeof(JsonResult));
+
+            IEnumerable<User> users = ((JsonResult)result).Value as IEnumerable<User>;
 
             users.Should().HaveCount(1);
             users.Last().Name.Should().Be(alice.Name);
@@ -90,11 +94,13 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Index(nameSearch: "bob");
+            var result = userController.Index(nameSearch: "bob", asJson: true);
 
             result.Should().NotBeNull();
 
-            IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(((dynamic)result).Value);
+            result.Should().BeOfType(typeof(JsonResult));
+
+            IEnumerable<User> users = ((JsonResult)result).Value as IEnumerable<User>;
 
             users.Should().HaveCount(1);
             users.Last().Name.Should().Be(bob.Name);
@@ -110,11 +116,13 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Index(nameSearch: "one");
+            var result = userController.Index(nameSearch: "one", asJson: true);
 
             result.Should().NotBeNull();
 
-            IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(((dynamic)result).Value);
+            result.Should().BeOfType(typeof(JsonResult));
+
+            IEnumerable<User> users = ((JsonResult)result).Value as IEnumerable<User>;
 
             users.Should().HaveCount(1);
             users.Last().Name.Should().Be(alice.Name);
@@ -130,14 +138,36 @@ namespace Tests
 
             var userController = new UserController(userRepositoryMock.Object);
 
-            var result = userController.Index(nameSearch: "dr");
+            var result = userController.Index(nameSearch: "dr", asJson: true);
 
             result.Should().NotBeNull();
 
-            IEnumerable<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(((dynamic)result).Value);
+            result.Should().BeOfType(typeof(JsonResult));
+
+            IEnumerable<User> users = ((JsonResult)result).Value as IEnumerable<User>;
 
             users.Should().HaveCount(1);
             users.Last().Name.Should().Be(charles.Name);
+            Mock.VerifyAll();
+        }
+
+        [Fact]
+        public void GetUsers_NoParams_ReturnsWebpage()
+        {
+            var userRepositoryMock = new Mock<IUserRepository>();
+
+            userRepositoryMock.Setup(x => x.GetUsers()).Returns(new List<User> { alice, bob, charles }).Verifiable();
+
+            var userController = new UserController(userRepositoryMock.Object);
+
+            var result = userController.Index();
+
+            result.Should().NotBeNull();
+
+            result.Should().BeOfType(typeof(ViewResult));
+
+            (((ViewResult)result).Model as IEnumerable<User>).Should().HaveCount(3);
+
             Mock.VerifyAll();
         }
 
