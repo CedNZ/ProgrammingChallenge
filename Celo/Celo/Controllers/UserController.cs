@@ -52,22 +52,36 @@ namespace Celo.Controllers
             return StatusCode(500, $"Unable to find User with Id {id}");
         }
 
+
+        // GET: api/User/ViewUser/5
+        [HttpGet("ViewUser/{id}", Name = "ViewUser")]
+        public ActionResult ViewUser(int id)
+        {
+            var user = _userRepository.GetUserById(id);
+            if(user != null)
+            {
+                return View(user);
+            }
+            return StatusCode(404);
+        }
+
         // POST: api/User/Update/5
         [HttpGet("Update/{id}", Name = "Update")]
         public ActionResult Update(int id)
         {
             var user = _userRepository.GetUserById(id);
             return View(user);
-
         }
 
         // POST: api/User/Update/5
         [HttpPost("Update/{id}", Name = "Update")]
         public ActionResult Update(int id, [FromForm] User user)
         {
-            return _userRepository.UpdateUser(id, user) 
-                ? Ok($"Succesfully updated User with Id {user.Id}")
-                : StatusCode(500, $"Unable to update user with Id {user.Id}");
+            if(_userRepository.UpdateUser(id, user))
+            {
+                return RedirectToAction("ViewUser", new { id });
+            }
+            return StatusCode(500, $"Unable to update user with Id {user.Id}");
 
         }
 

@@ -38,7 +38,7 @@
     <div id="search">
         <form method="get">
             <div>
-                <label for="maxRecords">Num. Records:</label>
+                <label for="maxRecords">Records to Fetch:</label>
                 <input type="number" name="maxRecords" value="@ViewBag.MaxRecords" />
             </div>
             <div>
@@ -46,12 +46,12 @@
                 <input type="text" name="nameSearch" value="@ViewBag.NameSearch" />
             </div>
             <div>
-                <label for="asJson"></label>
+                <label for="asJson">Response as Json?</label>
                 <input type="checkbox" name="asJson" value="false" id="asJson" onchange="ToggleCheckbox()" />
             </div>
             <br />
             <div>
-                <input type="submit" class="btn btn-primary" value="Search" />
+                <input type="submit" value="View Results" />
             </div>
         </form>
     </div>
@@ -94,7 +94,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a href='@Url.Action("Get", new { id = user.Id })'>
+                                    <a href='@Url.Action("ViewUser", new { id = user.Id })'>
                                         <img src="@user.ThumbnailPath" />
                                     </a>
                                 </div>
@@ -122,7 +122,7 @@
                             </td>
                             <td>
                                 <button>
-                                    @Html.ActionLink("Update Details", "Update", new { id = user.Id })
+                                    @Html.ActionLink("Edit", "Update", new { id = user.Id })
                                 </button>
                                 <button onclick="DeleteRow(@user.Id, this)">Delete User</button>
                             </td>

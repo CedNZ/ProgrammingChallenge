@@ -18,3 +18,19 @@ table thead tr td {
     #background-color: black;
     border-bottom: 1px solid black;
 }
+
+button a:link, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.grid-div {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    width: 20%;
+}
+
+.profilePic {
+    padding: 10px; 
+}
