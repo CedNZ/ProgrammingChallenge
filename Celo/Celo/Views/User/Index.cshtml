@@ -9,15 +9,25 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href='@Url.Content(@"~/Styles/main.css")' rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="search">
         <form method="get">
-            <input type="number" name="maxRecords" value="@ViewBag.MaxRecords"/>
-            <input type="text" name="nameSearch" value="@ViewBag.NameSearch"/>
-            <input type="submit" class="btn btn-primary" />
+            <div>
+                <label for="maxRecords">Num. Records:</label>
+                <input type="number" name="maxRecords" value="@ViewBag.MaxRecords" />
+            </div>
+            <div>
+                <label for="nameSearch">Name Search:</label>
+                <input type="text" name="nameSearch" value="@ViewBag.NameSearch" />
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary" value="Search" />
+            </div>
         </form>
     </div>
+    <br />
     <div id="data">
         <table>
             <thead>
@@ -47,6 +57,7 @@
                     <td>
                         @Html.DisplayNameFor(model => tempObj.Gender)
                     </td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +65,11 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(model => user.Id)
+                                <div>
+                                    <a href='@Url.Action("Get", new {id = user.Id })'>
+                                        <img src="@user.ThumbnailPath" />
+                                    </a>
+                                </div>
                             </td>
                             <td>
                                 @Html.DisplayFor(model => user.Title)
@@ -77,11 +92,14 @@
                             <td>
                                 @Html.DisplayFor(model => user.Gender)
                             </td>
+                            <td>
+                                @Html.ActionLink("Update Details", "Update", new { id = user.Id })
+                            </td>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </body>
+    </html>

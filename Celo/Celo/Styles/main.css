@@ -1,0 +1,18 @@
+﻿body {
+}
+
+table {
+    width: 90%;
+}
+
+table tr:nth-child(even) {
+    background-color: aliceblue;
+}
+
+table tr:nth-child(odd) {
+}
+
+table thead tr td {
+    #background-color: black;
+    border-bottom: 1px solid black;
+}
