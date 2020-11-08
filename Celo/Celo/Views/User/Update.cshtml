@@ -9,10 +9,42 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Update</title>
+    <link href='@Url.Content(@"~/Styles/main.css")' rel="stylesheet" type="text/css" />
 </head>
 <body>
     @Html.BeginForm("Update", "User")
-    @Html.EditorForModel()
-    <button type="submit" class="btn btn-primary">Save</button>
+    <div class="grid-div">
+        <div class="cell">Id</div>
+        <div class="cell">@Html.DisplayFor(model => Model.Id)</div>
+        @Html.HiddenFor(model => Model.Id)
+
+        <div class="cell">Title</div>
+        <div class="cell">@Html.EditorFor(model => Model.Title)</div>
+
+        <div class="cell">First Name</div>
+        <div class="cell">@Html.EditorFor(model => Model.FirstName)</div>
+
+        <div class="cell">Last Name</div>
+        <div class="cell">@Html.EditorFor(model => Model.LastName)</div>
+
+        <div class="cell">Email</div>
+        <div class="cell">@Html.EditorFor(model => Model.Email)</div>
+
+        <div class="cell">Date of Birth</div>
+        <div class="cell">@Html.EditorFor(model => Model.DateOfBirth)</div>
+
+        <div class="cell">Phone</div>
+        <div class="cell">@Html.EditorFor(model => Model.PhoneNumber)</div>
+
+        <div class="cell">Gender</div>
+        <div class="cell">@Html.EditorFor(model => Model.Gender)</div>
+
+        <div class="cell">Profile Picture Path</div>
+        <div class="cell">@Html.EditorFor(model => Model.ProfilePicturePath)</div>
+
+        <div class="cell">Profile Thumbnail Path</div>
+        <div class="cell">@Html.EditorFor(model => Model.ThumbnailPath)</div>
+    </div>
+    <button type="submit">Save</button>
 </body>
 </html>

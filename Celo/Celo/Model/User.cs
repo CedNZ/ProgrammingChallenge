@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Celo.Model
 {
@@ -13,11 +12,11 @@ namespace Celo.Model
         public int Id { get; set; }
 
         [Required]
-        [DisplayName("FirstName")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
         [Required]
-        [DisplayName("LastName")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -31,19 +30,22 @@ namespace Celo.Model
         public string Email { get; set; }
 
         [Required]
-        [DisplayName("DateOfBirth")]
+        [DisplayName("DoB")]
         public DateTime DateOfBirth { get; set; }
 
+        [DisplayName("Date of Birth")]
+        public string Birthday => DateOfBirth.Date.ToShortDateString();
+
         [Required]
-        [DisplayName("PhoneNumber")]
+        [DisplayName("Phone")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [DisplayName("ProfilePicturePath")]
+        [DisplayName("Profile Picture")]
         public string ProfilePicturePath { get; set; }
 
         [Required]
-        [DisplayName("ThumbnailPath")]
+        [DisplayName("Thumbnail")]
         public string ThumbnailPath { get; set; }
 
         [Required]

@@ -1,0 +1,36 @@
+﻿body {
+    background-color: mintcream;
+}
+
+table {
+    width: 90%;
+    color: black;
+}
+
+table tr:nth-child(even) {
+    background-color: aliceblue;
+}
+
+table tr:nth-child(odd) {
+}
+
+table thead tr td {
+    #background-color: black;
+    border-bottom: 1px solid black;
+}
+
+button a:link, a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.grid-div {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    width: 20%;
+}
+
+.profilePic {
+    padding: 10px; 
+}

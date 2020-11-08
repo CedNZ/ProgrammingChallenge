@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Celo.Model.User>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href='@Url.Content(@"~/Styles/main.css")' rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        asJson = false;
+        ToggleCheckbox = () => {
+            asJson = !asJson;
+            document.getElementById('asJson').value = asJson.toString();
+        };
+    </script>
+    <script type="text/javascript">
+            DeleteRow = (userId, sender) => {
+                let deleteConfirm = confirm('Are you sure you want to delete this user? Action cannot be undone');
+                let rowIndex = sender.parentNode.parentNode.rowIndex;
+                if (deleteConfirm) {
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('post', "./User/Delete/" + userId);
+                    xhr.send();
+                    xhr.onload = () => {
+                        if (xhr.status == 200) {
+                            document.getElementById('userTable').deleteRow(rowIndex);
+                        }
+                    }
+                }
+            }
+    </script>
+</head>
+<body>
+    <div id="search">
+        <form method="get">
+            <div>
+                <label for="maxRecords">Records to Fetch:</label>
+                <input type="number" name="maxRecords" value="@ViewBag.MaxRecords" />
+            </div>
+            <div>
+                <label for="nameSearch">Name Search:</label>
+                <input type="text" name="nameSearch" value="@ViewBag.NameSearch" />
+            </div>
+            <div>
+                <label for="asJson">Response as Json?</label>
+                <input type="checkbox" name="asJson" value="false" id="asJson" onchange="ToggleCheckbox()" />
+            </div>
+            <br />
+            <div>
+                <input type="submit" value="View Results" />
+            </div>
+        </form>
+    </div>
+    <br />
+    <div id="data">
+        <table id="userTable">
+            <thead>
+                <tr>
+                    @{ var tempObj = new Celo.Model.User();}
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Birthday)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => tempObj.Gender)
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach(var user in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div>
+                                    <a href='@Url.Action("ViewUser", new { id = user.Id })'>
+                                        <img src="@user.ThumbnailPath" />
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Birthday)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => user.Gender)
+                            </td>
+                            <td>
+                                <button>
+                                    @Html.ActionLink("Edit", "Update", new { id = user.Id })
+                                </button>
+                                <button onclick="DeleteRow(@user.Id, this)">Delete User</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
