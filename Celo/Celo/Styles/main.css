@@ -1,8 +1,10 @@
 ﻿body {
+    background-color: mintcream;
 }
 
 table {
     width: 90%;
+    color: black;
 }
 
 table tr:nth-child(even) {

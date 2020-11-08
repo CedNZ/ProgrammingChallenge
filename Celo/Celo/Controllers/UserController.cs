@@ -21,13 +21,18 @@ namespace Celo.Controllers
 
         // GET: api/User
         [HttpGet]
-        public ActionResult Index([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "")
+        public ActionResult Index([FromQuery] int maxRecords = 20, [FromQuery] string nameSearch = "", [FromQuery] bool asJson = false)
         {
             nameSearch ??= "";
 
             var allUsers = _userRepository.GetUsers();
 
             allUsers = allUsers.Where(u => u.Name.Contains(nameSearch, StringComparison.CurrentCultureIgnoreCase));
+
+            if(asJson)
+            {
+                return new JsonResult(allUsers.Take(maxRecords).ToList());
+            }
 
             ViewBag.MaxRecords = maxRecords;
             ViewBag.NameSearch = nameSearch;

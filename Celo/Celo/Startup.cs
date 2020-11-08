@@ -51,6 +51,7 @@ namespace Celo
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Styles")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Styles")),
                 RequestPath = new PathString("/Styles")
             });
         }
